@@ -19,12 +19,14 @@
 
 #include "TuioPad.h"
 
-#include "ofxAccelerometer.h"
+#include "ofxCoreMotion.h"
 #include "ofxiPhone.h"
 
 #include "TpViewController.h"
 #include "TpFingerDrawer.h"
 #include "TpTuioSender.h"
+
+#define GLES_SILENCE_DEPRECATION 1
 
 #pragma mark Variables
 
@@ -43,7 +45,7 @@ void TuioPad::setup() {
 	ofBackground(255, 255, 255);
 	ofSetBackgroundAuto(true);
 	
-	ofxAccelerometer.setup();
+    coreMotion.setupAccelerometer();
 	ofLoadImage(imageUp, "ThisWayUp.jpg");
 	imageUp.update();
 	
@@ -64,7 +66,8 @@ void TuioPad::update() {
 	if ([viewController isOn]) return;
 	
 	// if device is shaken hard, open UI, animated
-	ofPoint &acc = ofxAccelerometer.getForce();
+    coreMotion.update();
+	ofVec3f acc = coreMotion.getAccelerometerData();
 	float shake = acc.x*acc.x + acc.y*acc.y + acc.z*acc.z;
 
 	if(shake > 4) {
@@ -121,32 +124,36 @@ void TuioPad::exit() {
 
 void rotXY(float x, float y, float w, float h) {
 	
+    float scaleFactor = [viewController getSensitivity];
+    float scaleOffsetHeight = (ofGetHeight() - ofGetHeight()/scaleFactor)/2;
+    float scaleOffsetWidth = (ofGetWidth() - ofGetWidth()/scaleFactor)/2;
+    
 	switch([viewController deviceOrientation]) {
 		case UIDeviceOrientationPortrait:
-			rotatedTouchPosition.x = x/ofGetWidth();
-			rotatedTouchPosition.y = y/ofGetHeight();
+			rotatedTouchPosition.x = (x - scaleOffsetWidth)/ofGetWidth()*scaleFactor;
+			rotatedTouchPosition.y = (y - scaleOffsetHeight)/ofGetHeight()*scaleFactor;
 			rotatedTouchSize.x = w/ofGetWidth();
 			rotatedTouchSize.y = h/ofGetHeight();
 			break;
 			
 		case UIDeviceOrientationPortraitUpsideDown:
-			rotatedTouchPosition.x = 1 - x/ofGetWidth();
-			rotatedTouchPosition.y = 1 - y/ofGetHeight();
+			rotatedTouchPosition.x = 1 - (x - scaleOffsetWidth)/ofGetWidth()*scaleFactor;
+			rotatedTouchPosition.y = 1 - (y - scaleOffsetHeight)/ofGetHeight()*scaleFactor;
 			rotatedTouchSize.x = w/ofGetWidth();
 			rotatedTouchSize.y = h/ofGetHeight();
 			break;
 			
 		case UIDeviceOrientationLandscapeRight:
-			rotatedTouchPosition.x = 1 - y/ofGetHeight();
-			rotatedTouchPosition.y = x/ofGetWidth();
+			rotatedTouchPosition.x = 1 - (y - scaleOffsetHeight)/ofGetHeight()*scaleFactor;
+			rotatedTouchPosition.y = (x - scaleOffsetWidth)/ofGetWidth()*scaleFactor;
 			rotatedTouchSize.x = h/ofGetHeight();
 			rotatedTouchSize.y = w/ofGetWidth();
 			break;
 			
 		default:
 		case UIDeviceOrientationLandscapeLeft:
-			rotatedTouchPosition.x = y/ofGetHeight();
-			rotatedTouchPosition.y = 1.0f - x/ofGetWidth();
+			rotatedTouchPosition.x = (y - scaleOffsetHeight)/ofGetHeight()*scaleFactor;
+			rotatedTouchPosition.y = 1 - (x - scaleOffsetWidth)/ofGetWidth()*scaleFactor;
 			rotatedTouchSize.x = h/ofGetHeight();
 			rotatedTouchSize.y = w/ofGetWidth();
 			break;

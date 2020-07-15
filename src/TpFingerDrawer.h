@@ -24,7 +24,7 @@
 #include "TpViewController.h"
 
 #define		FINGER_RADIUS		40
-
+#define GLES_SILENCE_DEPRECATION 1
 
 class TpFingerDrawer {
 public:

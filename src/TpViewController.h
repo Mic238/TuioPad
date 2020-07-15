@@ -38,7 +38,9 @@ class TpTuioSender;
 	IBOutlet UIButton			*exitButton;
 	IBOutlet UIButton			*hostButton;
 	IBOutlet UISegmentedControl	*packetSwitch;
-
+    IBOutlet UILabel *sensitivityLabel;
+    IBOutlet UISlider *sensitivitySlider;
+    
 	IBOutlet TpSettings			*settings;
 	TpTuioSender				*tuioSender;
 
@@ -64,9 +66,11 @@ class TpTuioSender;
 -(IBAction) connectPressed:(id)sender;
 -(IBAction) exitPressed:(id)sender;
 -(IBAction) packetSelected:(id)sender;
+-(IBAction) sliderUpdated:(id)sender;
 
 -(bool) connect;
 -(void) disconnect;
 -(void) checkNetwork;
+-(float) getSensitivity;
 
 @end

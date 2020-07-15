@@ -21,6 +21,7 @@
 #define TUIOPAD_H
 
 #include "ofxiOS.h"
+#include "ofxCoreMotion.h"
 //#include "ofxMultiTouch.h"
 
 class TuioPad : public ofxiOSApp
@@ -49,6 +50,8 @@ public:
 	void gotFocus();
 	void gotMemoryWarning();
 	//void deviceOrientationChanged(int newOrientation);
+    
+    ofxCoreMotion coreMotion;
 };
 
 #endif

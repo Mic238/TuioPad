@@ -173,6 +173,7 @@
 	defaults = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 				[self getBroadcastAddress], kSetting_HostIP,
 				[NSNumber numberWithInt:3333], kSetting_Port,
+                [NSNumber numberWithInt:1], kSetting_Sensitivity,
 				[NSNumber numberWithInt:0], kSetting_Packet,
 				[NSNumber numberWithInt:0], kSetting_Orientation, 
 				[NSNumber numberWithInt:1], kSetting_PeriodicUpdates, 

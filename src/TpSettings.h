@@ -30,6 +30,7 @@
 #define kSetting_PeriodicUpdates	@"PeriodicUpdates"
 #define kSetting_FullUpdates		@"FullUpdates"
 #define kSetting_BlobMessages		@"BlobMessages"
+#define kSetting_Sensitivity        @"Sensitivity"
 
 #define kSettings_Key				@"TuioPadSettings"
 

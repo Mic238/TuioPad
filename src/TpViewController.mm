@@ -64,7 +64,7 @@
 			break;
 
 		case 1:
-			deviceOrientation = UIDeviceOrientationLandscapeRight;
+			deviceOrientation = UIDeviceOrientationLandscapeLeft;
 			[[NSNotificationCenter defaultCenter] removeObserver:self];
 			break;
 			
@@ -87,11 +87,12 @@
 
 -(IBAction) connectPressed:(id)sender {
 	
-	if (!network) return;
+	//if (!network) return;
 	
 	[settings setInt:packetSwitch.selectedSegmentIndex forKey:kSetting_Packet];
 	if (packetSwitch.selectedSegmentIndex<2) [settings setString:hostTextField.text forKey:kSetting_HostIP];
 	[settings setInt:[portTextField.text intValue] forKey:kSetting_Port];
+    [settings setFloat:sensitivitySlider.value forKey:kSetting_Sensitivity];
 	[settings setInt:orientControl.selectedSegmentIndex forKey:kSetting_Orientation];
 	[settings setInt:periodicUpdatesSwitch.on forKey:kSetting_PeriodicUpdates];
 	[settings setInt:fullUpdatesSwitch.on forKey:kSetting_FullUpdates];
@@ -111,7 +112,7 @@
 	if (packetSwitch.selectedSegmentIndex==2) {
 		NSLog(@"TpViewController::set %@", hostTextField.text);
 		[settings setString:hostTextField.text forKey:kSetting_HostIP];
-		hostTextField.text = @"incoming connection";
+		hostTextField.text = @"Incoming Connection";
 		hostTextField.textColor = [UIColor grayColor];
 		//hostLabel.text = @"server";
 		hostTextField.enabled = NO;
@@ -120,7 +121,12 @@
 		hostTextField.text = [settings getString:kSetting_HostIP];
 		hostTextField.enabled = YES;
 		hostButton.enabled = YES;
-		hostTextField.textColor = [UIColor blackColor];
+        if (@available(iOS 13.0, *)) {
+            hostTextField.textColor = [UIColor labelColor];
+        } else {
+            // Fallback on earlier versions
+            hostTextField.textColor = [UIColor blackColor];
+        }
 		//hostLabel.text = @"client";
 	}
 }
@@ -132,7 +138,20 @@
 
 -(IBAction) defaultPortPressed:(id)sender {
 	packetSwitch.selectedSegmentIndex = 0;
+    hostButton.enabled = YES;
+    hostTextField.enabled = YES;
+    hostTextField.text = [settings getString:kSetting_HostIP];
+    if (@available(iOS 13.0, *)) {
+        hostTextField.textColor = [UIColor labelColor];
+    } else {
+        // Fallback on earlier versions
+        hostTextField.textColor = [UIColor blackColor];
+    }
 	portTextField.text = [NSString stringWithFormat:@"%i", [[settings getDefaultFor:kSetting_Port] intValue]];
+}
+
+-(IBAction) sliderUpdated:(id)sender {
+    sensitivityLabel.text = [NSString stringWithFormat:@"%.2f", sensitivitySlider.value];
 }
 
 #pragma mark ----- Open & close -----
@@ -187,6 +206,7 @@
 	[settings setInt:packetSwitch.selectedSegmentIndex forKey:kSetting_Packet];
 	if (packetSwitch.selectedSegmentIndex<2) [settings setString:hostTextField.text forKey:kSetting_HostIP];
 	[settings setInt:[portTextField.text intValue] forKey:kSetting_Port];
+    [settings setFloat:sensitivitySlider.value forKey:kSetting_Sensitivity];
 	[settings setInt:orientControl.selectedSegmentIndex forKey:kSetting_Orientation];
 	[settings setInt:periodicUpdatesSwitch.on forKey:kSetting_PeriodicUpdates];
 	[settings setInt:fullUpdatesSwitch.on forKey:kSetting_FullUpdates];
@@ -219,6 +239,8 @@
 	}
 	[settings setString:HostIP forKey:kSetting_HostIP];
 	portTextField.text						= [NSString stringWithFormat:@"%i", [settings getInt:kSetting_Port]];
+    sensitivitySlider.value                 = [settings getFloat:kSetting_Sensitivity];
+    sensitivityLabel.text                   = [NSString stringWithFormat:@"%.2f", [settings getFloat:kSetting_Sensitivity]];
 	orientControl.selectedSegmentIndex		= [settings getInt:kSetting_Orientation];
 	periodicUpdatesSwitch.on				= [settings getInt:kSetting_PeriodicUpdates];
 	fullUpdatesSwitch.on					= [settings getInt:kSetting_FullUpdates];
@@ -240,17 +262,20 @@
 	if (network) {
 		NSString *address = [settings getIpAddress];
 		
-		NSString *status = [NSString stringWithFormat:@"your network address is %@", address];
+		NSString *status = [NSString stringWithFormat:@"Device IP Address %@", address];
 		statusLabel.textColor = [UIColor whiteColor];
 		statusLabel.text = status;
 		[startButton setEnabled: YES];
 		NSLog(@"TpViewController: %@", status);
 	} else {
-		statusLabel.textColor = [UIColor redColor];
-		statusLabel.text = @"no active network connection available!";
-		[startButton setEnabled: NO];
+		statusLabel.textColor = [UIColor whiteColor];
+		statusLabel.text = @"No Wireless Network Connection";
 		//NSLog(@"TpViewController: no active network connection available!");
 	}
+}
+
+-(float) getSensitivity {
+    return [settings getFloat:kSetting_Sensitivity];
 }
 
 - (void) didRotate:(NSNotification *)notification {	
@@ -258,12 +283,8 @@
 	if(o != UIDeviceOrientationUnknown && o != UIDeviceOrientationFaceUp && o != UIDeviceOrientationFaceDown) {
 		deviceOrientation = o;
 	} else if([settings getInt:kSetting_Orientation] == 0) {
-		deviceOrientation = UIDeviceOrientationLandscapeRight;
+		deviceOrientation = UIDeviceOrientationLandscapeLeft;
 	}
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)didReceiveMemoryWarning {
