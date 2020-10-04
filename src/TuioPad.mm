@@ -42,12 +42,7 @@ ofPoint				restAccel;
 
 void TuioPad::setup() {
 	ofSetFrameRate(60);
-	ofBackground(255, 255, 255);
-	ofSetBackgroundAuto(true);
-	
     coreMotion.setupAccelerometer();
-	ofLoadImage(imageUp, "ThisWayUp.jpg");
-	imageUp.update();
 	
 	NSString *nibName = @"TuioPhone";
 	if ([[UIDevice currentDevice].model rangeOfString:@"iPad"].location != NSNotFound) {
@@ -64,6 +59,18 @@ void TuioPad::setup() {
 void TuioPad::update() {
 
 	if ([viewController isOn]) return;
+    
+    if (viewController.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+        ofBackground(27, 27, 27);
+        ofSetBackgroundAuto(true);
+        ofLoadImage(imageUp, "ThisWayUpDark.jpg");
+        imageUp.update();
+    } else {
+        ofBackground(255, 255, 255);
+        ofSetBackgroundAuto(true);
+        ofLoadImage(imageUp, "ThisWayUp.jpg");
+        imageUp.update();
+    }
 	
 	// if device is shaken hard, open UI, animated
     coreMotion.update();

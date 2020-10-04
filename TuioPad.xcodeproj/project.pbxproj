@@ -38,6 +38,7 @@
 		4F38AA5624BD6DAB00F728D6 /* UdpSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B44A5B1E09DB6C002A0063 /* UdpSender.cpp */; };
 		4F99CDF824BE593800D35DEA /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F99CDF724BE593800D35DEA /* CoreMotion.framework */; };
 		4F99CE0124BEB4DC00D35DEA /* ofxCoreMotion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F99CE0024BEAE9000D35DEA /* ofxCoreMotion.mm */; };
+		4FB396EB25299E3D0043346D /* ThisWayUpDark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4FB396EA25299E3D0043346D /* ThisWayUpDark.jpg */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		678E130817951530005B6D19 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130717951530005B6D19 /* Icon@2x.png */; };
@@ -93,6 +94,7 @@
 		4F99CDF724BE593800D35DEA /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		4F99CDFF24BEAE9000D35DEA /* ofxCoreMotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCoreMotion.h; sourceTree = "<group>"; };
 		4F99CE0024BEAE9000D35DEA /* ofxCoreMotion.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxCoreMotion.mm; sourceTree = "<group>"; };
+		4FB396EA25299E3D0043346D /* ThisWayUpDark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ThisWayUpDark.jpg; path = data/ThisWayUpDark.jpg; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		678E130717951530005B6D19 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "data/Icon@2x.png"; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 				678E130917951536005B6D19 /* Icon.png */,
 				678E130717951530005B6D19 /* Icon@2x.png */,
 				678E130B1795153C005B6D19 /* Default.png */,
+				4FB396EA25299E3D0043346D /* ThisWayUpDark.jpg */,
 				678E130D17951540005B6D19 /* Default@2x.png */,
 				678E130F17951549005B6D19 /* Default-568h@2x.png */,
 			);
@@ -486,7 +489,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = PDLNLK7K6T;
@@ -500,6 +503,7 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -541,6 +545,7 @@
 				B2F074341E09E2070088CBB6 /* Logo@2x.png in Resources */,
 				B26AD4321E965D0000519F36 /* Icon-120.png in Resources */,
 				B2F0742B1E09E1F20088CBB6 /* Default-LandscapeRight.png in Resources */,
+				4FB396EB25299E3D0043346D /* ThisWayUpDark.jpg in Resources */,
 				B2F0742D1E09E1F20088CBB6 /* Default-PortraitUpsideDown.png in Resources */,
 				B2B44A6D1E09DB6C002A0063 /* LICENSE in Resources */,
 				B2F074331E09E2070088CBB6 /* Logo.png in Resources */,
@@ -628,10 +633,10 @@
 					./src/TUIO,
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.2.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tuio.tuiopad;
+				PRODUCT_BUNDLE_IDENTIFIER = hongfengxu.tuiopad;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -655,10 +660,10 @@
 					./src/TUIO,
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.2.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tuio.tuiopad;
+				PRODUCT_BUNDLE_IDENTIFIER = hongfengxu.tuiopad;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
